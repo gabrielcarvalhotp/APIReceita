@@ -3,11 +3,12 @@ unit APIReceita.Principal;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
-  System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, REST.Client, Data.Bind.Components,
-  Data.Bind.ObjectScope, Vcl.StdCtrls, Vcl.ExtCtrls, REST.Types, System.JSON,
-  Vcl.NumberBox;
+  Vcl.Forms, 
+  Vcl.StdCtrls, 
+  Vcl.ExtCtrls, 
+  Vcl.Controls,
+  System.Classes,
+  APIReceita.Controller.Dto.Empresa;
 
 type
   TForm1 = class(TForm)
@@ -16,9 +17,6 @@ type
     Shape1: TShape;
     btnDoItSerch: TButton;
     pnlInformations: TPanel;
-    RESTClient1: TRESTClient;
-    RESTRequest1: TRESTRequest;
-    RESTResponse1: TRESTResponse;
     pnlLastUpdate: TPanel;
     pnlLastUpdateData: TPanel;
     pnlLastUpdateLine: TPanel;
@@ -95,17 +93,14 @@ type
     edCNPJ: TEdit;
     Panel1: TPanel;
     procedure btnDoItSerchClick(Sender: TObject);
-  private const
-    MesesArray: array of string = ['Janeiro', 'Fevereiro', 'Março', 'Abril',
-      'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro',
-      'Dezembro'];
+    procedure FormCreate(Sender: TObject);
+  private
+    FControllerDtoEmpresa: iControllerDtoEmpresa;
   public
-    function isValidCNPJ(CNPJ: string): string;
-    function CNPJCorrect(CNPJ: string): string;
   end;
 
 var
-  FrmAPIReceita: TForm1;
+  Form1: TForm1;
 
 implementation
 
@@ -113,70 +108,31 @@ uses RegularExpressions;
 
 {$R *.dfm}
 
-function TForm1.isValidCNPJ(CNPJ: string): string;
-const
-  CNPJ_REGEX = '^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$';
-begin
-  if (TRegEx.IsMatch(CNPJ, CNPJ_REGEX)) then result := CNPJCorrect(CNPJ)
-  else raise Exception.Create('CNJP Invalido');
-end;
-
-function TForm1.CNPJCorrect(CNPJ: string): string;
-var
-  I: Integer;
-begin
-  for I := 0 to Length(CNPJ) do
-  begin
-    if CNPJ[I] in ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'] then
-      result := result + CNPJ[I];
-  end;
-end;
-
 procedure TForm1.btnDoItSerchClick(Sender: TObject);
-var
-  jsonValue: TJSONValue;
-  Dia, Mes, ano, hora, DateLastUpdate: string;
 begin
-  RESTClient1.BaseURL := 'https://receitaws.com.br/v1/cnpj/' + isValidCNPJ(edCNPJ.text);
-  RESTRequest1.Execute;
-  jsonValue := RESTRequest1.Response.jsonValue;
+  FControllerDtoEmpresa.PesquisaReceita(edCNPJ.text)
+    .Ultima_Atualizacao(pnlLastUpdateData)
+    .CNPJ(PnlCNPJData)
+    .Abertura(pnlDateOpenData)
+    .Nome(pnlNameData)
+    .Natureza_Juridica(pnlNatJuridicaData)
+    .Lougradouro(pnlAddressStreetData)
+    .Numero(pnlAddressNumberData)
+    .Complemento(pnlCompletData)
+    .CEP(pnlCEPData)
+    .Bairro(pnlBairroData)
+    .Municipio(pnlCityData)
+    .UF(pnlUFData)
+    .Email(pnlContactEmailData)
+    .Telefone(pnlSituationData)
+    .Situacao(pnlSituationData)
+    .Data_Situacao(pnlDateSituationData)
+    .Motivo_Situacao(pnlReasonSituationData)
+end;
 
-  if (jsonValue.GetValue<string>('status', '') = 'ERROR') then
-    raise Exception.Create('Esse CNPJ não existe!');
-
-  DateLastUpdate := jsonValue.GetValue<string>('ultima_atualizacao', '');
-
-  ano := DateLastUpdate.Split(['-'])[0];
-  Mes := DateLastUpdate.Split(['-'])[1];
-  Dia := DateLastUpdate.Split(['-'])[2].Split(['T'])[0];
-  hora := DateLastUpdate.Split(['-'])[2].Split(['T'])[1].Split(['.'])[0];
-  pnlLastUpdateData.Caption := Dia + ' de ' + MesesArray[Mes.ToInteger] + ' de '
-    + ano + ' às ' + hora;
-
-  PnlCNPJData.Caption := jsonValue.GetValue<string>('cnpj', '') + ' - ' +
-    jsonValue.GetValue<string>('tipo', '');
-  pnlDateOpenData.Caption := jsonValue.GetValue<string>('abertura', '');
-
-  pnlNameData.Caption := jsonValue.GetValue<string>('nome', '');
-
-  pnlNatJuridicaData.Caption := jsonValue.GetValue<string>('natureza_juridica', '');
-
-  pnlAddressStreetData.Caption := jsonValue.GetValue<string>('logradouro', '');
-  pnlAddressNumberData.Caption := jsonValue.GetValue<string>('numero', '');
-  pnlCompletData.Caption := jsonValue.GetValue<string>('complemento', '');
-
-  pnlCEPData.Caption := jsonValue.GetValue<string>('cep', '');
-  pnlBairroData.Caption := jsonValue.GetValue<string>('bairro', '');
-  pnlCityData.Caption := jsonValue.GetValue<string>('municipio', '');
-  pnlUFData.Caption := jsonValue.GetValue<string>('uf', '');
-
-  pnlContactEmailData.Caption := jsonValue.GetValue<string>('email', '');
-  pnlContactTelephoneData.Caption := jsonValue.GetValue<string>('telefone', '');
-
-  pnlSituationData.Caption := jsonValue.GetValue<string>('situacao', '');
-  pnlDateSituationData.Caption := jsonValue.GetValue<string>('data_situacao', '');
-
-  pnlReasonSituationData.Caption := '  ' + jsonValue.GetValue<string>('motivo_situacao', '');
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  FControllerDtoEmpresa := TControllerDtoEmpresa.New; 
 end;
 
 end.

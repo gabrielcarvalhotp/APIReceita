@@ -1,0 +1,267 @@
+unit APIReceita.Controller.Dto.Empresa;
+
+interface
+
+uses
+  Vcl.ExtCtrls, APIReceita.Model.Entidades.Empresa, REST.Client;
+
+type
+  iControllerDtoEmpresa = interface
+    ['{9FD35BE5-EC48-412E-B34C-BDE234641EBE}']
+    function PesquisaReceita(aValue: string): iControllerDtoEmpresa;
+    function Ultima_Atualizacao(aValue: TPanel): iControllerDtoEmpresa;
+    function CNPJ(aValue: TPanel): iControllerDtoEmpresa;
+    function Nome(aValue: TPanel): iControllerDtoEmpresa;
+    function Abertura(aValue: TPanel): iControllerDtoEmpresa;
+    function Natureza_Juridica(aValue: TPanel): iControllerDtoEmpresa;
+    function Lougradouro(aValue: TPanel): iControllerDtoEmpresa;
+    function Numero(aValue: TPanel): iControllerDtoEmpresa;
+    function Complemento(aValue: TPanel): iControllerDtoEmpresa;
+    function CEP(aValue: TPanel): iControllerDtoEmpresa;
+    function Bairro(aValue: TPanel): iControllerDtoEmpresa;
+    function Municipio(aValue: TPanel): iControllerDtoEmpresa;
+    function UF(aValue: TPanel): iControllerDtoEmpresa;
+    function Email(aValue: TPanel): iControllerDtoEmpresa;
+    function Telefone(aValue: TPanel): iControllerDtoEmpresa;
+    function Situacao(aValue: TPanel): iControllerDtoEmpresa;
+    function Data_Situacao(aValue: TPanel): iControllerDtoEmpresa;
+    function Motivo_Situacao(aValue: TPanel): iControllerDtoEmpresa;
+  end;
+
+  TControllerDtoEmpresa = class(TInterfacedObject, iControllerDtoEmpresa)
+  private
+    { private }
+    FEmpresa: TModelEntidadeEmpresa;
+    FRESTClient: TRESTClient;
+    FRESTRequest: TRESTRequest;
+    FRESTResponse: TRESTResponse;
+  const
+    MesesArray: array of string = ['Janeiro', 'Fevereiro', 'Março', 'Abril',
+      'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro',
+      'Dezembro'];
+  public
+    { public }
+    constructor Create;
+    destructor Destroy; override;
+    class function New: iControllerDtoEmpresa;
+    function PesquisaReceita(aValue: string): iControllerDtoEmpresa;
+    function Ultima_Atualizacao(aValue: TPanel): iControllerDtoEmpresa;
+    function CNPJ(aValue: TPanel): iControllerDtoEmpresa;
+    function Nome(aValue: TPanel): iControllerDtoEmpresa;
+    function Abertura(aValue: TPanel): iControllerDtoEmpresa;
+    function Natureza_Juridica(aValue: TPanel): iControllerDtoEmpresa;
+    function Lougradouro(aValue: TPanel): iControllerDtoEmpresa;
+    function Numero(aValue: TPanel): iControllerDtoEmpresa;
+    function Complemento(aValue: TPanel): iControllerDtoEmpresa;
+    function CEP(aValue: TPanel): iControllerDtoEmpresa;
+    function Bairro(aValue: TPanel): iControllerDtoEmpresa;
+    function Municipio(aValue: TPanel): iControllerDtoEmpresa;
+    function UF(aValue: TPanel): iControllerDtoEmpresa;
+    function Email(aValue: TPanel): iControllerDtoEmpresa;
+    function Telefone(aValue: TPanel): iControllerDtoEmpresa;
+    function Situacao(aValue: TPanel): iControllerDtoEmpresa;
+    function Data_Situacao(aValue: TPanel): iControllerDtoEmpresa;
+    function Motivo_Situacao(aValue: TPanel): iControllerDtoEmpresa;
+    function isValidCNPJ(CNPJ: string): string;
+    function CNPJCorrect(CNPJ: string): string;
+  end;
+
+implementation
+
+uses RegularExpressions, System.SysUtils, System.JSON;
+
+{ TControllerDtoEmpresa }
+
+function TControllerDtoEmpresa.isValidCNPJ(CNPJ: string): string;
+const
+  CNPJ_REGEX = '^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$';
+begin
+  if (TRegEx.IsMatch(CNPJ, CNPJ_REGEX)) then
+    result := CNPJCorrect(CNPJ)
+  else
+    raise Exception.Create('CNJP Invalido');
+end;
+
+function TControllerDtoEmpresa.CNPJCorrect(CNPJ: string): string;
+var
+  I: Integer;
+begin
+  for I := 0 to Length(CNPJ) do
+    if CNPJ[I] in ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'] then
+      result := result + CNPJ[I];
+end;
+
+function TControllerDtoEmpresa.Nome(aValue: TPanel): iControllerDtoEmpresa;
+begin
+  result := self;
+  aValue.Caption := FEmpresa.Nome;
+end;
+
+function TControllerDtoEmpresa.Ultima_Atualizacao(aValue: TPanel)
+  : iControllerDtoEmpresa;
+begin
+  result := self;
+  aValue.Caption := FEmpresa.Ultima_Atualizacao;
+end;
+
+function TControllerDtoEmpresa.Abertura(aValue: TPanel): iControllerDtoEmpresa;
+begin
+  result := self;
+  aValue.Caption := FEmpresa.Abertura;
+end;
+
+function TControllerDtoEmpresa.Bairro(aValue: TPanel): iControllerDtoEmpresa;
+begin
+  result := self;
+  aValue.Caption := FEmpresa.Bairro
+end;
+
+function TControllerDtoEmpresa.CEP(aValue: TPanel): iControllerDtoEmpresa;
+begin
+  result := self;
+  aValue.Caption := FEmpresa.CEP
+end;
+
+function TControllerDtoEmpresa.CNPJ(aValue: TPanel): iControllerDtoEmpresa;
+begin
+  result := self;
+  aValue.Caption := FEmpresa.CNPJ
+end;
+
+function TControllerDtoEmpresa.Complemento(aValue: TPanel)
+  : iControllerDtoEmpresa;
+begin
+  result := self;
+  aValue.Caption := FEmpresa.Complemento
+end;
+
+constructor TControllerDtoEmpresa.Create;
+begin
+  FEmpresa := TModelEntidadeEmpresa.Create;
+  FRESTClient := TRESTClient.Create(nil);
+  FRESTResponse := TRESTResponse.Create(nil);
+  FRESTRequest := TRESTRequest.Create(nil);
+  FRESTRequest.Response := FRESTResponse;
+  FRESTRequest.Client := FRESTClient;
+end;
+
+function TControllerDtoEmpresa.Data_Situacao(aValue: TPanel)
+  : iControllerDtoEmpresa;
+begin
+  result := self;
+  aValue.Caption := FEmpresa.Data_Situacao;
+end;
+
+destructor TControllerDtoEmpresa.Destroy;
+begin
+  inherited;
+  FEmpresa.DisposeOf;
+  FRESTClient.DisposeOf;
+  FRESTRequest.DisposeOf;
+  FRESTResponse.DisposeOf;
+end;
+
+function TControllerDtoEmpresa.Email(aValue: TPanel): iControllerDtoEmpresa;
+begin
+  result := self;
+  aValue.Caption := FEmpresa.Email
+end;
+
+function TControllerDtoEmpresa.Lougradouro(aValue: TPanel)
+  : iControllerDtoEmpresa;
+begin
+  result := self;
+  aValue.Caption := FEmpresa.Lougradouro
+end;
+
+function TControllerDtoEmpresa.Motivo_Situacao(aValue: TPanel)
+  : iControllerDtoEmpresa;
+begin
+  result := self;
+  aValue.Caption := FEmpresa.Motivo_Situacao
+end;
+
+function TControllerDtoEmpresa.Municipio(aValue: TPanel): iControllerDtoEmpresa;
+begin
+  result := self;
+  aValue.Caption := FEmpresa.Municipio
+end;
+
+function TControllerDtoEmpresa.Natureza_Juridica(aValue: TPanel)
+  : iControllerDtoEmpresa;
+begin
+  result := self;
+  aValue.Caption := FEmpresa.Natureza_Juridica
+end;
+
+class function TControllerDtoEmpresa.New: iControllerDtoEmpresa;
+begin
+  result := self.Create;
+end;
+
+function TControllerDtoEmpresa.Numero(aValue: TPanel): iControllerDtoEmpresa;
+begin
+  result := self;
+  aValue.Caption := FEmpresa.Numero
+end;
+
+function TControllerDtoEmpresa.PesquisaReceita(aValue: string)
+  : iControllerDtoEmpresa;
+var
+  jsonValue: TJSONValue;
+  Dia, Mes, ano, hora, DateLastUpdate: string;
+begin
+  FRESTClient.BaseURL := 'https://receitaws.com.br/v1/cnpj/' + isValidCNPJ(aValue);
+  FRESTRequest.Execute;
+  jsonValue := FRESTRequest.Response.jsonValue;
+
+  if (jsonValue.GetValue<string>('status', '') = 'ERROR') then
+    raise Exception.Create('Esse CNPJ não existe!');
+
+  DateLastUpdate := jsonValue.GetValue<string>('ultima_atualizacao', '');
+  ano := DateLastUpdate.Split(['-'])[0];
+  Mes := DateLastUpdate.Split(['-'])[1];
+  Dia := DateLastUpdate.Split(['-'])[2].Split(['T'])[0];
+  hora := DateLastUpdate.Split(['-'])[2].Split(['T'])[1].Split(['.'])[0];
+
+  FEmpresa.Ultima_Atualizacao := Dia + ' de ' + MesesArray[Mes.ToInteger] +
+    ' de ' + ano + ' às ' + hora;
+  FEmpresa.CNPJ := jsonValue.GetValue<string>('cnpj', '') + ' - ' +
+    jsonValue.GetValue<string>('tipo', '');
+  FEmpresa.Abertura := jsonValue.GetValue<string>('abertura', '');
+  FEmpresa.Nome := jsonValue.GetValue<string>('cnpj', '') + ' - ' + jsonValue.GetValue<string>('tipo', '');
+  FEmpresa.Nome := jsonValue.GetValue<string>('nome', '');
+  FEmpresa.Natureza_Juridica := jsonValue.GetValue<string> ('natureza_juridica', '');
+  FEmpresa.Lougradouro := jsonValue.GetValue<string>('logradouro', '');
+  FEmpresa.Numero := jsonValue.GetValue<string>('numero', '');
+  FEmpresa.Complemento := jsonValue.GetValue<string>('complemento', '');
+  FEmpresa.CEP := jsonValue.GetValue<string>('cep', '');
+  FEmpresa.Bairro := jsonValue.GetValue<string>('bairro', '');
+  FEmpresa.Municipio := jsonValue.GetValue<string>('municipio', '');
+  FEmpresa.UF := jsonValue.GetValue<string>('uf', '');
+  FEmpresa.Email := jsonValue.GetValue<string>('email', '');
+  FEmpresa.Telefone := jsonValue.GetValue<string>('telefone', '');
+  FEmpresa.Situacao := jsonValue.GetValue<string>('situacao', '');
+  FEmpresa.Data_Situacao := jsonValue.GetValue<string>('data_situacao', '');
+  FEmpresa.Motivo_Situacao := jsonValue.GetValue<string>('motivo_situacao', '');
+end;
+
+function TControllerDtoEmpresa.Situacao(aValue: TPanel): iControllerDtoEmpresa;
+begin
+  result := self;
+  aValue.Caption := FEmpresa.Situacao
+end;
+
+function TControllerDtoEmpresa.Telefone(aValue: TPanel): iControllerDtoEmpresa;
+begin
+  result := self;
+  aValue.Caption := FEmpresa.Telefone
+end;
+
+function TControllerDtoEmpresa.UF(aValue: TPanel): iControllerDtoEmpresa;
+begin
+  result := self;
+  aValue.Caption := FEmpresa.UF
+end;
+
+end.

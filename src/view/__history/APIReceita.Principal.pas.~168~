@@ -1,0 +1,140 @@
+unit APIReceita.Principal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, REST.Client, Data.Bind.Components,
+  Data.Bind.ObjectScope, Vcl.StdCtrls, Vcl.ExtCtrls, REST.Types, System.JSON,
+  Vcl.NumberBox, APIReceita.Controller.Dto.Empresa;
+
+type
+  TForm1 = class(TForm)
+    pnlContainer: TPanel;
+    pnlHeader: TPanel;
+    Shape1: TShape;
+    btnDoItSerch: TButton;
+    pnlInformations: TPanel;
+    RESTClient1: TRESTClient;
+    RESTRequest1: TRESTRequest;
+    RESTResponse1: TRESTResponse;
+    pnlLastUpdate: TPanel;
+    pnlLastUpdateData: TPanel;
+    pnlLastUpdateLine: TPanel;
+    pnlLastUpdateText: TPanel;
+    pnlReasonSituation: TPanel;
+    Panel4: TPanel;
+    pnlContact: TPanel;
+    pnlAddressInformations: TPanel;
+    pnlAddress: TPanel;
+    pnlNatJuridica: TPanel;
+    pnlName: TPanel;
+    pnlNumberAndDate: TPanel;
+    pnlNumber: TPanel;
+    pnlDateOpen: TPanel;
+    pnlCNPJText: TPanel;
+    pnlCNPJLine: TPanel;
+    PnlCNPJData: TPanel;
+    pnlDateOpenText: TPanel;
+    pnlDateOpenLine: TPanel;
+    pnlDateOpenData: TPanel;
+    pnlnameText: TPanel;
+    pnlNameLine: TPanel;
+    pnlNameData: TPanel;
+    pnlNatJuridicaData: TPanel;
+    pnlNatJuridicaLine: TPanel;
+    pnlNatJuridicaText: TPanel;
+    pnlComplet: TPanel;
+    pnlAddressNumber: TPanel;
+    pnlAddressStreet: TPanel;
+    pnlAddressStreetData: TPanel;
+    pnlAddressStreetLine: TPanel;
+    pnlAddressStreetText: TPanel;
+    pnlAddressNumberData: TPanel;
+    pnlAddressNumberLine: TPanel;
+    pnlAddressNumberText: TPanel;
+    pnlCompletData: TPanel;
+    pnlCompletLine: TPanel;
+    pnlCompletText: TPanel;
+    pnlUF: TPanel;
+    pnlCity: TPanel;
+    pnlBairro: TPanel;
+    pnlCEP: TPanel;
+    pnlCEPText: TPanel;
+    pnlCEPLine: TPanel;
+    pnlCEPData: TPanel;
+    pnlBairroText: TPanel;
+    pnlBairroline: TPanel;
+    pnlBairroData: TPanel;
+    pnlCityText: TPanel;
+    pnlCityLine: TPanel;
+    pnlCityData: TPanel;
+    pnlUFText: TPanel;
+    pnlUFLine: TPanel;
+    pnlUFData: TPanel;
+    pnlContactTelephone: TPanel;
+    pnlContactEmail: TPanel;
+    pnlContactEmailData: TPanel;
+    pnlContactLine: TPanel;
+    pnlContactEmailText: TPanel;
+    pnlContactTelephoneData: TPanel;
+    pnlContactTelephoneLine: TPanel;
+    pnlContactTelephoneText: TPanel;
+    pnlSituation: TPanel;
+    pnlSituationData: TPanel;
+    pnlSituationLine: TPanel;
+    pnlSituationText: TPanel;
+    pnlDateSituation: TPanel;
+    pnlDateSituationData: TPanel;
+    pnlDataSituationLine: TPanel;
+    pnlDataSituationText: TPanel;
+    pnlReasonSituationLine: TPanel;
+    pnlReasonSituationText: TPanel;
+    pnlReasonSituationData: TPanel;
+    edCNPJ: TEdit;
+    Panel1: TPanel;
+    procedure btnDoItSerchClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+    FControllerDtoEmpresa: iControllerDtoEmpresa;
+  public
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+uses RegularExpressions;
+
+{$R *.dfm}
+
+procedure TForm1.btnDoItSerchClick(Sender: TObject);
+begin
+  FControllerDtoEmpresa.PesquisaReceita(edCNPJ.text)
+    {.Ultima_Atualizacao(pnlLastUpdateData)
+    .CNPJ(PnlCNPJData)
+    .Abertura(pnlDateOpenData)
+    .Nome(pnlNameData)
+    .Natureza_Juridica(pnlNatJuridicaData)
+    .Lougradouro(pnlAddressStreetData)
+    .Numero(pnlAddressNumberData)
+    .Complemento(pnlCompletData)
+    .CEP(pnlCEPData)
+    .Bairro(pnlBairroData)
+    .Municipio(pnlCityData)
+    .UF(pnlUFData)
+    .Email(pnlContactEmailData)
+    .Telefone(pnlSituationData)
+    .Situacao(pnlSituationData)
+    .Data_Situacao(pnlDateSituationData)
+    .Motivo_Situacao(pnlReasonSituationData)}
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  FControllerDtoEmpresa := TControllerDtoEmpresa.New; 
+end;
+
+end.

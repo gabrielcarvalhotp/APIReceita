@@ -1,0 +1,16 @@
+program APIReceita;
+
+uses
+  Vcl.Forms,
+  APIReceita.Principal in 'src\view\APIReceita.Principal.pas' {Form1},
+  APIReceita.Model.Entidades.Empresa in 'src\Model\APIReceita.Model.Entidades.Empresa.pas',
+  APIReceita.Controller.Dto.Empresa in 'src\Controller\Dto\APIReceita.Controller.Dto.Empresa.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TFrmAPIReceita, FrmAPIReceita);
+  Application.Run;
+end.

@@ -1,0 +1,70 @@
+unit APIReceita.Model.Entidades.Empresa;
+
+interface
+
+type
+  TModelEntidadeEmpresa = class
+  private
+    FCNPJ: string;
+    FAbertura: string;
+    FNatureza_Juridica: string;
+    FLougradouro: string;
+    FNumero: string;
+    FComplemento: string;
+    FCEP: string;
+    FBairro: string;
+    FMunicipio: string;
+    FUF: string;
+    FEmail: string;
+    FTelefone: string;
+    FSituacao: string;
+    FData_Situacao: string;
+    FMotivo_Situacao: string;
+
+  public
+    property CNPJ: string read FCNPJ write FCNPJ;
+    property Abertura: string read FAbertura write FAbertura;
+    property Natureza_Juridica: string read FNatureza_Juridica write FNatureza_Juridica;
+    property Lougradouro: string read FLougradouro write FLougradouro;
+    property Numero: string read FNumero write FNumero;
+    property Complemento: string read FComplemento write FComplemento;
+    property CEP: string read FCEP write FCEP;
+    property Bairro: string read FBairro write FBairro;
+    property Municipio: string read FMunicipio write FMunicipio;
+    property UF: string read FUF write FUF;
+    property Email: string read FEmail write FEmail;
+    property Telefone: string read FTelefone write FTelefone;
+    property Situacao: string read FSituacao write FSituacao;
+    property Data_Situacao: string read FData_Situacao write FData_Situacao;
+    property Motivo_Situacao: string read FMotivo_Situacao
+      write FMotivo_Situacao;
+  end;
+
+  {
+
+    PnlCNPJData.Caption := jsonValue.GetValue<string>('cnpj', '') + ' - ' + jsonValue.GetValue<string>('tipo', '');
+    pnlDateOpenData.Caption := jsonValue.GetValue<string>('abertura', '');
+
+    pnlNameData.Caption := jsonValue.GetValue<string>('nome', '');
+
+    pnlNatJuridicaData.Caption := jsonValue.GetValue<string>('natureza_juridica', '');
+
+    pnlAddressStreetData.Caption := jsonValue.GetValue<string>('logradouro', '');
+    pnlAddressNumberData.Caption := jsonValue.GetValue<string>('numero', '');
+    pnlCompletData.Caption := jsonValue.GetValue<string>('complemento', '');
+
+    pnlCEPData.Caption := jsonValue.GetValue<string>('cep', '');
+    pnlBairroData.Caption := jsonValue.GetValue<string>('bairro', '');
+    pnlCityData.Caption := jsonValue.GetValue<string>('municipio', '');
+    pnlUFData.Caption := jsonValue.GetValue<string>('uf', '');
+
+    pnlContactEmailData.Caption := jsonValue.GetValue<string>('email', '');
+    pnlContactTelephoneData.Caption := jsonValue.GetValue<string>('telefone', '');
+
+    pnlSituationData.Caption := jsonValue.GetValue<string>('situacao', '');
+    pnlDateSituationData.Caption := jsonValue.GetValue<string>('data_situacao', '');
+
+    pnlReasonSituationData.Caption := '  ' + jsonValue.GetValue<string>('motivo_situacao', ''); }
+implementation
+
+end.

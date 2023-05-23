@@ -13,6 +13,7 @@ object Form1: TForm1
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object pnlContainer: TPanel
@@ -22,7 +23,6 @@ object Form1: TForm1
     Height = 637
     Align = alClient
     TabOrder = 0
-    ExplicitHeight = 837
     object pnlHeader: TPanel
       Left = 1
       Top = 1
@@ -83,9 +83,6 @@ object Form1: TForm1
       Padding.Right = 5
       Padding.Bottom = 5
       TabOrder = 1
-      ExplicitLeft = 2
-      ExplicitTop = 111
-      ExplicitHeight = 723
       object pnlLastUpdate: TPanel
         Left = 6
         Top = 6
@@ -172,8 +169,6 @@ object Form1: TForm1
           Color = clBackground
           ParentBackground = False
           TabOrder = 0
-          ExplicitLeft = 2
-          ExplicitTop = 9
         end
         object pnlReasonSituationText: TPanel
           AlignWithMargins = True
@@ -196,8 +191,6 @@ object Form1: TForm1
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 1
-          ExplicitLeft = 12
-          ExplicitTop = 9
         end
         object pnlReasonSituationData: TPanel
           Left = 1
@@ -215,9 +208,6 @@ object Form1: TForm1
           Padding.Left = 10
           ParentBackground = False
           TabOrder = 2
-          ExplicitLeft = 12
-          ExplicitTop = 28
-          ExplicitWidth = 519
         end
       end
       object Panel4: TPanel
@@ -253,7 +243,6 @@ object Form1: TForm1
             Alignment = taLeftJustify
             BevelOuter = bvNone
             TabOrder = 0
-            ExplicitWidth = 252
           end
           object pnlSituationLine: TPanel
             Left = 1
@@ -269,7 +258,6 @@ object Form1: TForm1
             Color = clBackground
             ParentBackground = False
             TabOrder = 1
-            ExplicitWidth = 262
           end
           object pnlSituationText: TPanel
             AlignWithMargins = True
@@ -292,8 +280,6 @@ object Form1: TForm1
             Font.Style = [fsBold]
             ParentFont = False
             TabOrder = 2
-            ExplicitLeft = 13
-            ExplicitWidth = 323
           end
         end
         object pnlDateSituation: TPanel
@@ -303,9 +289,6 @@ object Form1: TForm1
           Height = 49
           Align = alClient
           TabOrder = 1
-          ExplicitLeft = 266
-          ExplicitTop = 2
-          ExplicitWidth = 265
           object pnlDateSituationData: TPanel
             AlignWithMargins = True
             Left = 11
@@ -320,7 +303,6 @@ object Form1: TForm1
             Alignment = taLeftJustify
             BevelOuter = bvNone
             TabOrder = 0
-            ExplicitWidth = 253
           end
           object pnlDataSituationLine: TPanel
             Left = 1
@@ -336,7 +318,6 @@ object Form1: TForm1
             Color = clBackground
             ParentBackground = False
             TabOrder = 1
-            ExplicitWidth = 263
           end
           object pnlDataSituationText: TPanel
             AlignWithMargins = True
@@ -359,7 +340,6 @@ object Form1: TForm1
             Font.Style = [fsBold]
             ParentFont = False
             TabOrder = 2
-            ExplicitWidth = 253
           end
         end
       end
@@ -382,7 +362,6 @@ object Form1: TForm1
           Height = 49
           Align = alClient
           TabOrder = 0
-          ExplicitWidth = 264
           object pnlContactTelephoneData: TPanel
             AlignWithMargins = True
             Left = 11
@@ -397,9 +376,6 @@ object Form1: TForm1
             Alignment = taLeftJustify
             BevelOuter = bvNone
             TabOrder = 0
-            ExplicitLeft = 12
-            ExplicitTop = 2
-            ExplicitHeight = 47
           end
           object pnlContactTelephoneLine: TPanel
             Left = 1
@@ -415,8 +391,6 @@ object Form1: TForm1
             Color = clBackground
             ParentBackground = False
             TabOrder = 1
-            ExplicitLeft = 2
-            ExplicitTop = 9
           end
           object pnlContactTelephoneText: TPanel
             AlignWithMargins = True
@@ -439,8 +413,6 @@ object Form1: TForm1
             Font.Style = [fsBold]
             ParentFont = False
             TabOrder = 2
-            ExplicitLeft = 12
-            ExplicitTop = 9
           end
         end
         object pnlContactEmail: TPanel
@@ -464,9 +436,6 @@ object Form1: TForm1
             Alignment = taLeftJustify
             BevelOuter = bvNone
             TabOrder = 0
-            ExplicitLeft = 12
-            ExplicitTop = 2
-            ExplicitHeight = 47
           end
           object pnlContactLine: TPanel
             Left = 1
@@ -482,8 +451,6 @@ object Form1: TForm1
             Color = clBackground
             ParentBackground = False
             TabOrder = 1
-            ExplicitLeft = 2
-            ExplicitTop = 9
           end
           object pnlContactEmailText: TPanel
             AlignWithMargins = True
@@ -506,8 +473,6 @@ object Form1: TForm1
             Font.Style = [fsBold]
             ParentFont = False
             TabOrder = 2
-            ExplicitLeft = 12
-            ExplicitTop = 9
           end
         end
       end
@@ -530,8 +495,6 @@ object Form1: TForm1
           Height = 49
           Align = alClient
           TabOrder = 0
-          ExplicitLeft = 409
-          ExplicitWidth = 120
           object pnlUFText: TPanel
             AlignWithMargins = True
             Left = 11
@@ -553,8 +516,6 @@ object Form1: TForm1
             Font.Style = [fsBold]
             ParentFont = False
             TabOrder = 0
-            ExplicitLeft = 12
-            ExplicitTop = 9
           end
           object pnlUFLine: TPanel
             Left = 1
@@ -570,8 +531,6 @@ object Form1: TForm1
             Color = clBackground
             ParentBackground = False
             TabOrder = 1
-            ExplicitLeft = 2
-            ExplicitTop = 33
           end
           object pnlUFData: TPanel
             AlignWithMargins = True
@@ -587,8 +546,6 @@ object Form1: TForm1
             Alignment = taLeftJustify
             BevelOuter = bvNone
             TabOrder = 2
-            ExplicitLeft = 12
-            ExplicitTop = 28
           end
         end
         object pnlCity: TPanel
@@ -619,8 +576,6 @@ object Form1: TForm1
             Font.Style = [fsBold]
             ParentFont = False
             TabOrder = 0
-            ExplicitLeft = 12
-            ExplicitTop = 9
           end
           object pnlCityLine: TPanel
             Left = 1
@@ -636,8 +591,6 @@ object Form1: TForm1
             Color = clBackground
             ParentBackground = False
             TabOrder = 1
-            ExplicitLeft = 2
-            ExplicitTop = 33
           end
           object pnlCityData: TPanel
             AlignWithMargins = True
@@ -653,8 +606,6 @@ object Form1: TForm1
             Alignment = taLeftJustify
             BevelOuter = bvNone
             TabOrder = 2
-            ExplicitLeft = 12
-            ExplicitTop = 28
           end
         end
         object pnlBairro: TPanel
@@ -685,8 +636,6 @@ object Form1: TForm1
             Font.Style = [fsBold]
             ParentFont = False
             TabOrder = 0
-            ExplicitLeft = 12
-            ExplicitTop = 9
           end
           object pnlBairroline: TPanel
             Left = 1
@@ -702,8 +651,6 @@ object Form1: TForm1
             Color = clBackground
             ParentBackground = False
             TabOrder = 1
-            ExplicitLeft = 2
-            ExplicitTop = 33
           end
           object pnlBairroData: TPanel
             AlignWithMargins = True
@@ -719,8 +666,6 @@ object Form1: TForm1
             Alignment = taLeftJustify
             BevelOuter = bvNone
             TabOrder = 2
-            ExplicitLeft = 12
-            ExplicitTop = 28
           end
         end
         object pnlCEP: TPanel
@@ -751,8 +696,6 @@ object Form1: TForm1
             Font.Style = [fsBold]
             ParentFont = False
             TabOrder = 0
-            ExplicitLeft = 12
-            ExplicitTop = 9
           end
           object pnlCEPLine: TPanel
             Left = 1
@@ -768,8 +711,6 @@ object Form1: TForm1
             Color = clBackground
             ParentBackground = False
             TabOrder = 1
-            ExplicitLeft = 2
-            ExplicitTop = 33
           end
           object pnlCEPData: TPanel
             AlignWithMargins = True
@@ -785,8 +726,6 @@ object Form1: TForm1
             Alignment = taLeftJustify
             BevelOuter = bvNone
             TabOrder = 2
-            ExplicitLeft = 12
-            ExplicitTop = 28
           end
         end
       end
@@ -1259,21 +1198,5 @@ object Form1: TForm1
     Color = clWhite
     ParentBackground = False
     TabOrder = 1
-  end
-  object RESTClient1: TRESTClient
-    Params = <>
-    Left = 320
-    Top = 88
-  end
-  object RESTRequest1: TRESTRequest
-    Client = RESTClient1
-    Params = <>
-    Response = RESTResponse1
-    Left = 400
-    Top = 88
-  end
-  object RESTResponse1: TRESTResponse
-    Left = 480
-    Top = 88
   end
 end

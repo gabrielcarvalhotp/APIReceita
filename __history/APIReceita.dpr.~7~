@@ -1,0 +1,19 @@
+program APIReceita;
+
+uses
+  Vcl.Forms,
+  APIReceita.Principal in 'src\view\APIReceita.Principal.pas' {Form1},
+  APIReceita.Model.Entidades.Empresa in 'src\Model\APIReceita.Model.Entidades.Empresa.pas',
+  APIReceita.Controller.Dto.Empresa in 'src\Controller\Dto\APIReceita.Controller.Dto.Empresa.pas',
+  Vcl.Themes,
+  Vcl.Styles;
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  TStyleManager.TrySetStyle('Tablet Dark');
+  Application.CreateForm(TForm1, Form1);
+  Application.Run;
+end.
